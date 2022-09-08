@@ -1,0 +1,80 @@
+﻿@model AlunoWeb.Models.AlunoViewModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+
+@*<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Erro:</span>
+  Corrija o endereço de email
+</div>*@
+
+<p>
+    <h1 style="display:inline">Tabela De Alunos</h1>
+    <a class=" btn btn-success btn-lg float-end"  asp-action="Adicionar">Novo Aluno</a>  
+ </p>
+<hr />
+<form asp-controller="Aluno" asp-action="Index" method="get">
+    <p>
+        <input type="text" placeholder="Matrícula ou Nome do Aluno..." asp-for="ConteudoPesquisa" style="width:393px "/>
+        <input type="submit" value="&#128269;Buscar" class="btn btn-success btn-sm float-sm-none position-absolute"  />     
+    </p> 
+</form>
+
+<div class="table-responsive">
+<table class="table table-striped table-bordered align-middle  white-space-nowrap ">
+    <caption>Lista de Alunos</caption>
+    <thead >     
+        <tr style="color:white; background-color: seagreen ; text-align:center; white-space: nowrap;">
+            <th style ="width:105px; text-align:center;">
+                @Html.DisplayNameFor(model => model.Alunos[0].Matricula).Replace("*", "")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alunos[0].AlunoNome).Replace("*", "")
+            </th>
+            <th style ="width:96px ;text-align:center">
+                @Html.DisplayNameFor(model => model.Alunos[0].Sexo).Replace("*", "")
+            </th>
+            <th style ="width:190px ; text-align:center"> 
+                @Html.DisplayNameFor(model => model.Alunos[0].DataNascimento).Replace("*", "")
+            </th>        
+            <th style ="width:150px;text-align:center">
+                @Html.DisplayNameFor(model => model.Alunos[0].CPF).Replace("(Opcional)", "")
+            </th>
+            <th style ="width:90px">
+                Opção
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Alunos)
+        {
+            <tr style ="white-space:nowrap;">
+                <td style ="text-align:center ;">
+                    @Html.DisplayFor(modelItem => item.Matricula)
+                </td>
+                <td >
+                    @Html.DisplayFor(modelItem => item.AlunoNome)
+                </td>
+                <td style ="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Sexo)
+                </td>
+                <td style ="text-align:center">
+                    @Html.DisplayFor(modelItem => item.DataNascimento)
+                </td>
+                <td style ="text-align:center">
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>                
+                <td class="btn-group  gap-2 align-content-center " >                 
+                    <a class = "btn btn-sm btn-outline-success "  asp-action="Editar" asp-route-id="@item.Matricula">&#9998;Editar</a>                     
+                    <a class ="btn btn-sm btn-outline-danger" asp-action="Excluir" asp-route-id="@item.Matricula">&#128465;Excluir</a>                 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+

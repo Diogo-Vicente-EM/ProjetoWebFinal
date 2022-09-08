@@ -1,0 +1,69 @@
+﻿@model AlunoWeb.Models.Aluno
+
+@{
+    ViewData["Title"] = "Adicionar";
+}
+
+<h1>Adicionar Novo Aluno</h1>
+
+<h4>Aluno</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Adicionar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Matricula" class="control-label"></label>
+                <input asp-for="Matricula" class="form-control" required name=Matricula data-val-required="Preencha o Campo Matricula"
+                data-val-regex-pattern="^\d+$"  maxLength={6}/>
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AlunoNome" class="control-label"></label>
+                <input asp-for="AlunoNome" class="form-control" title="Preencha o campo Nome" required name=AlunoNome
+                data-val-required="Preencha o Campo Nome" />          
+                <span asp-validation-for="AlunoNome" class="text-danger" ></span>
+                
+            </div>
+            <div class="form-group" > 
+                <h6> Sexo*</h6>
+                <select asp-for="Sexo" asp-items="Html.GetEnumSelectList<EnumeradorSexo>()"  title="Preencha o Sexo" required name=Sexo 
+                    id=Sexo>
+                    <option value="" ></option>     
+                </select>      
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataNascimento" class="control-label"></label>
+                <input asp-for="DataNascimento" class="form-control" name=DataNascimento data-val-required="Preencha o Campo Data Nascimento"/>
+                <span asp-validation-for="DataNascimento" class="text-danger" ></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CPF" class="control-label"></label>
+                <input class="form-control" type="text" data-val="true" 
+                data-val-length="The field CPF must be a string with a maximum length of 11." 
+                data-val-length-max="11" data-val-regex="Contém Caracteres Não Permetidos" 
+                data-val-regex-pattern="^\d+$" id="CPF" maxlength="11" name="CPF" value="" aria-describedby="CPF-error" >
+                <span asp-validation-for="CPF" class="text-danger"></span>
+
+
+            </div>
+            <p></p>
+            <div class="form-group">
+                <input type="submit" value="Adicionar&#10004;" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <p></p>
+        <a class="btn btn-primary btn btn-secondary" asp-action="Index">&#9664Voltar Para Lista</a> 
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
