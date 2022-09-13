@@ -84,23 +84,19 @@ namespace AlunoWeb.Models
         {
             var regrasException = new RegrasException<Aluno>();
 
-            try
-            {
-                DateTime dataAtual = DateTime.Now;
-                if (aluno.DataNascimento.Year < 1850)
-                {
 
-                    return false;
-                }
-                if (aluno.DataNascimento > dataAtual)
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
+            DateTime dataAtual = DateTime.Now;
+            if (aluno.DataNascimento.Year < 1850)
             {
-                return false;
+                regrasException.AdicionarErroPara(x => x.DataNascimento, "Data deve ser maior que 1850");
+                throw regrasException;
             }
+            if (aluno.DataNascimento > dataAtual)
+            {
+                regrasException.AdicionarErroPara(x => x.DataNascimento, "Data não pode ser maior que data atual");
+                throw regrasException;
+            }
+
 
             var alunoCpf = repositorio.BuscarTodosAlunos().Where(a => a.CPF.Replace("-", "").Replace(".", "") == aluno.CPF).Any();
             if (alunoCpf && aluno.Matricula != id)
@@ -133,7 +129,7 @@ namespace AlunoWeb.Models
                     aluno.CPF = FormatCPF(aluno.CPF);
                 }
             }
-            
+
             return true;
         }
 

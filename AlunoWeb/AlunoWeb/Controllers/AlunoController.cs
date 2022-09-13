@@ -37,7 +37,7 @@ namespace AlunoWeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Adicionar(int matricula, string AlunoNome, EnumeradorSexo sexo, DateTime dataNascimento, string? cpf)
+        public IActionResult Adicionar(int matricula, string AlunoNome, EnumeradorSexo sexo, DateTime dataNascimento, string? cpf)
         {
            Aluno aluno = new(matricula, AlunoNome, sexo, dataNascimento);
             aluno.CPF = cpf;
@@ -67,21 +67,20 @@ namespace AlunoWeb.Controllers
             }
             return View(aluno);
         }
-        public async Task<IActionResult> Excluir(int id)
+        public IActionResult Excluir(int id)
         {
             var aluno = repositorio.BucarPorId(id);
             return View(aluno);
         }
         [HttpPost, ActionName("Excluir")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExcluirConfirmar(int id)
+        public IActionResult ExcluirConfirmar(int id)
         {
             var aluno = repositorio.BucarPorId(id);
             repositorio.RemoveAluno(aluno);
             return RedirectToAction(nameof(Index));
         }
-
-        public async Task<IActionResult> Editar(int id)
+        public IActionResult Editar(int id)
         {
             var aluno = repositorio.BucarPorId(id);
             aluno.CPF = aluno.CPF.Replace(".", "").Replace("-", "");
@@ -90,7 +89,7 @@ namespace AlunoWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int matricula, string AlunoNome, EnumeradorSexo sexo, DateTime dataNascimento, string cpf)
+        public IActionResult Editar(int matricula, string AlunoNome, EnumeradorSexo sexo, DateTime dataNascimento, string? cpf)
         {
 
             Aluno aluno = new(matricula, AlunoNome, sexo, dataNascimento);
@@ -107,7 +106,7 @@ namespace AlunoWeb.Controllers
             {
                 ex.CopiarErrosPara(ModelState);
             }
-            return View();
+            return View(aluno);
         }
 
     }

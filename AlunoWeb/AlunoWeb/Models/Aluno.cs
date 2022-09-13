@@ -11,7 +11,6 @@ namespace AlunoWeb.Models
     public class Aluno : IEntidade
     {
         [Display(Name = "Matricula*")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Contém Caracteres Não Permetidos")]
         [Range(1, 999999999, ErrorMessage = "Tamanho Permitido é de 1 até 999999999")]
         public int Matricula { get; set; }
 
@@ -24,10 +23,12 @@ namespace AlunoWeb.Models
 
         [Display(Name = "Data de Nascimento*")]
         [DataType(DataType.Date)]
+
         public DateTime DataNascimento { get; set; }
         [Display(Name = "CPF (Opcional)")]
         [StringLength(11)]
         [RegularExpression(@"^\d+$", ErrorMessage = "Contém Caracteres Não Permetidos")]
+
         public string? CPF { get; set; }
         public Aluno(int numMatricula, string alunoNome, EnumeradorSexo Sexo, DateTime dataNascimento)
         {
@@ -41,7 +42,8 @@ namespace AlunoWeb.Models
             return obj is Aluno aluno &&
                    Matricula == aluno.Matricula &&
                    AlunoNome == aluno.AlunoNome &&
-                   CPF == aluno.CPF;
+                   CPF == aluno.CPF &&
+                   Sexo == aluno.Sexo;
         }
         public override int GetHashCode()
         {
